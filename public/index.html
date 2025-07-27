@@ -62,11 +62,35 @@
             overflow-y: auto;
             padding: 20px;
             background: #f8f9fa;
+            background-image: url('logo.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 200px 200px;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .messages-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('logo.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 200px 200px;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .message {
             margin-bottom: 15px;
             animation: slideIn 0.3s ease-out;
+            position: relative;
+            z-index: 2;
         }
 
         .message.system {
