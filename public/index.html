@@ -195,6 +195,22 @@
             display: none;
         }
 
+        .watermark {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            transition: opacity 0.3s ease;
+        }
+
+        .watermark:hover {
+            opacity: 0.3;
+        }
+
         /* Responsive design */
         @media (max-width: 600px) {
             .chat-container {
@@ -246,6 +262,9 @@
     </div>
 
     <div class="connection-status" id="connectionStatus">Connecting...</div>
+    
+    <!-- Watermark Logo -->
+    <img src="logo.png" alt="Logo" class="watermark">
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
