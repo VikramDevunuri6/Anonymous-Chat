@@ -1,4 +1,4 @@
-# CVR Muchatlu 🎭
+# CVR Gossips 🎭
 
 A real-time anonymous messaging application where users can send messages to a common group chat room without revealing their identity.
 

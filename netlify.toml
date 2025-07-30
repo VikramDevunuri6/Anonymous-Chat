@@ -1,6 +1,6 @@
 [build]
   publish = "public"
-  command = "echo 'Building CVR Muchatlu'"
+  command = "echo 'Building CVR Gossips'"
 
 [functions]
   node_bundler = "esbuild"
