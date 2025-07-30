@@ -62,7 +62,8 @@
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.2);
             padding: 8px 12px;
             border-radius: 20px;
             font-size: 14px;
@@ -72,12 +73,12 @@
             flex: 1;
             overflow-y: auto;
             padding: 20px;
-            background: #f8f9fa;
+            background: linear-gradient(to right, #f8f9ff, #eef2ff);
         }
 
         .message {
             margin-bottom: 15px;
-            animation: slideIn 0.3s ease-out;
+            animation: slideIn 0.3s ease-in;
             position: relative;
             z-index: 2;
         }
@@ -167,14 +168,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .connection-status {
