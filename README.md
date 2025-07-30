@@ -2,6 +2,12 @@
 
 A real-time anonymous messaging application where users can send messages to a common group chat room without revealing their identity.
 
+## 🚀 Live Demo
+
+**Try it now:** [https://anonymous-chat-1-esfu.onrender.com/](https://anonymous-chat-1-esfu.onrender.com/)
+
+Click the link above to start chatting anonymously right away!
+
 ## Features
 
 - **Complete Anonymity**: Users are automatically assigned random anonymous names (like "Silent Fox", "Mystery Cat", etc.)
