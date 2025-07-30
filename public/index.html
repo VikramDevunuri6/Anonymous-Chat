@@ -13,11 +13,72 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: black;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.2);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background: #0D1117;
+        }
+
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Floating bubbles */
+        .floating-bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            animation: float 6s infinite linear;
+        }
+
+        body.dark-mode .floating-bubble {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                transform: translateY(90vh) scale(1);
+            }
+            90% {
+                transform: translateY(-10vh) scale(1);
+            }
+            100% {
+                transform: translateY(-20vh) scale(0);
+            }
         }
 
         .chat-container {
@@ -30,6 +91,14 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .chat-container {
+            background: #161B22;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .chat-header {
@@ -38,6 +107,11 @@
             padding: 20px;
             text-align: center;
             position: relative;
+            transition: background 0.3s ease;
+        }
+
+        body.dark-mode .chat-header {
+            background: linear-gradient(90deg, #1a1a2e, #16213e);
         }
 
         .chat-header h1 {
@@ -74,6 +148,11 @@
             overflow-y: auto;
             padding: 20px;
             background: linear-gradient(to right, #f8f9ff, #eef2ff);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .messages-container {
+            background: #161B22;
         }
 
         .message {
@@ -88,6 +167,11 @@
             color: #666;
             font-style: italic;
             font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode .message.system {
+            color: #8B949E;
         }
 
         .message.user {
@@ -111,6 +195,11 @@
         .message-time {
             font-size: 12px;
             color: #999;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode .message-time {
+            color: #8B949E;
         }
 
         .message-text {
@@ -121,6 +210,13 @@
             max-width: 70%;
             word-wrap: break-word;
             line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .message-text {
+            background: #2D333B;
+            color: #FFFFFF;
+            border: 1px solid #30363D;
         }
 
         .input-container {
@@ -129,6 +225,12 @@
             border-top: 1px solid #eee;
             display: flex;
             gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .input-container {
+            background: #161B22;
+            border-top: 1px solid #30363D;
         }
 
         .message-input {
@@ -138,7 +240,19 @@
             border-radius: 25px;
             font-size: 16px;
             outline: none;
-            transition: border-color 0.3s;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .message-input {
+            background: #21262D;
+            border: 2px solid #30363D;
+            color: #FFFFFF;
+        }
+
+        body.dark-mode .message-input::placeholder {
+            color: #8B949E;
         }
 
         .message-input:focus {
@@ -154,7 +268,11 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+        }
+
+        body.dark-mode .send-button {
+            background: #3B82F6;
         }
 
         .send-button:hover {
@@ -245,6 +363,9 @@
     </style>
 </head>
 <body>
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
+    
     <div class="chat-container">
         <div class="chat-header">
             <h1>
@@ -409,6 +530,61 @@
             sendButton.disabled = e.target.value.trim().length === 0;
         });
 
+        // Dark mode functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let darkMode = localStorage.getItem('darkMode') === 'true';
+        
+        function updateDarkMode() {
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.textContent = '☀️';
+            } else {
+                document.body.classList.remove('dark-mode');
+                darkModeToggle.textContent = '🌙';
+            }
+            localStorage.setItem('darkMode', darkMode);
+        }
+        
+        darkModeToggle.addEventListener('click', () => {
+            darkMode = !darkMode;
+            updateDarkMode();
+        });
+        
+        // Initialize dark mode
+        updateDarkMode();
+        
+        // Floating bubbles
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'floating-bubble';
+            
+            // Random size between 20px and 100px
+            const size = Math.random() * 80 + 20;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            
+            // Random horizontal position
+            bubble.style.left = Math.random() * 100 + 'vw';
+            
+            // Random animation duration between 4s and 8s
+            bubble.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            
+            // Random delay
+            bubble.style.animationDelay = Math.random() * 2 + 's';
+            
+            document.body.appendChild(bubble);
+            
+            // Remove bubble after animation
+            setTimeout(() => {
+                if (bubble.parentNode) {
+                    bubble.parentNode.removeChild(bubble);
+                }
+            }, 8000);
+        }
+        
+        // Create bubbles periodically
+        setInterval(createBubble, 800);
+        
         // Initialize
         sendButton.disabled = true;
         messageInput.focus();
